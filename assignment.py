@@ -15,5 +15,5 @@ class TestStringInput(unittest.TestCase):
          self.assertEqual(self.calc.Add(""), 0)
     
 
-if _name_ == "_main_":
+if __name__ == "_main_":
     unittest.main()
