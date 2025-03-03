@@ -9,7 +9,7 @@ class StringCalculator:
         delimiter = r"[,\n]"
         numbers = re.split(delimiter, numbers)
         nums = list(map(int, numbers))
-        return sum(n for n in nums)
+        return sum(n for n in nums if n <= 1000)
 
 class TestStringInput(unittest.TestCase):
     def setUp(self):
@@ -29,6 +29,8 @@ class TestStringInput(unittest.TestCase):
     def test_newline_as_delimiter(self):
         self.assertEqual(self.calc.Add("1\n2,3"), 6)
 
+    def test_ignore_numbers_greater_than_1000(self):
+        self.assertEqual(self.calc.Add("2,1001"), 2)
 
 
     
