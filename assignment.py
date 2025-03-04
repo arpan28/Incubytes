@@ -6,8 +6,14 @@ class StringCalculator:
         if not numbers:
             return 0
         
-        delimiter = r"[,\n]"
-        numbers = re.split(delimiter, numbers)
+        delimiter = ','
+        if numbers.startswith('//'):
+            match = re.match(r'//(\[.*?\]|.)\n(.*)', numbers, re.DOTALL)
+            if match:
+                delimiters, numbers = match.groups()
+                delimiters = re.findall(r'\[(.*?)\]', delimiters) or [delimiters]
+                delimiter = '|'.join(map(re.escape, delimiters))
+        numbers = re.split(delimiter + '|\n', numbers)
         nums = list(map(int, numbers))
         negatives = [n for n in nums if n < 0]
         if negatives:
@@ -40,12 +46,9 @@ class TestStringInput(unittest.TestCase):
             self.calc.Add("1,-2,3,-4")
         self.assertEqual(str(context.exception), "negatives not allowed [-2, -4]")
     
+    def test_custom_delimiter(self):
+        self.assertEqual(self.calc.Add("//;\n1;2"), 3)
+
    
-
-
-
-    
-    
-
 if __name__ == "_main_":
     unittest.main()
