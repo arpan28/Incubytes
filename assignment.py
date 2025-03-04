@@ -48,6 +48,10 @@ class TestStringInput(unittest.TestCase):
     
     def test_custom_delimiter(self):
         self.assertEqual(self.calc.Add("//;\n1;2"), 3)
+    
+    def test_multiple_delimiters(self):
+        self.assertEqual(self.calc.Add("//[*][%]\n1*2%3"), 6)
+
 
    
 if __name__ == "_main_":
