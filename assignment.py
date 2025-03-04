@@ -13,11 +13,14 @@ class StringCalculator:
                 delimiters, numbers = match.groups()
                 delimiters = re.findall(r'\[(.*?)\]', delimiters) or [delimiters]
                 delimiter = '|'.join(map(re.escape, delimiters))
+
         numbers = re.split(delimiter + '|\n', numbers)
         nums = list(map(int, numbers))
         negatives = [n for n in nums if n < 0]
+
         if negatives:
             raise ValueError(f"negatives not allowed {negatives}")
+        
         return sum(n for n in nums if n <= 1000)
 
 class TestStringInput(unittest.TestCase):
@@ -26,6 +29,7 @@ class TestStringInput(unittest.TestCase):
 
     def test_empty_string(self):
          self.assertEqual(self.calc.Add(""), 0)
+
     def test_single_number(self):
         self.assertEqual(self.calc.Add("1"), 1)
     
@@ -53,6 +57,5 @@ class TestStringInput(unittest.TestCase):
         self.assertEqual(self.calc.Add("//[*][%]\n1*2%3"), 6)
 
 
-   
 if __name__ == "_main_":
     unittest.main()
